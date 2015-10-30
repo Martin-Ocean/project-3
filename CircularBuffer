@@ -1,36 +1,52 @@
+import java.util.ArrayList;
+
 /**
  * Created by gong62 on 10/30/15.
  */
-public class User {
-    private String usernmae;
-    private String password;
-    SessionCookie cookie;
-
-    public User(String username, String password, SessionCookie cookie) { // initialize instances to relatively
-        this.usernmae = username;
-        this.password = password;
-        this.cookie = cookie;
+public class CircularBuffer {
+    public static int numbering = 0;
+    ArrayList <String> Buffer = new ArrayList<>();
+    private int size = 0;
+    public CircularBuffer(int size) {
+        this.size = size;
     }
 
-    public String getName() { //returns the username of the user
-        return this.usernmae;
-    }
-
-    public boolean checkPassword(String password) { // return ture if the password given is equal to the password in
-        if (password == null) {                     // the object & chekc if the password is null to prevent
-            return false;                           // null-pointer exception
+    public void put(String message) {
+        String stored = String.format("%04d", numbering++) + " " + message;
+        if (Buffer.size() < size) {
+            Buffer.add(stored);
         }
-        return this.password == password;
+        if (Buffer.size() == size) {
+            Buffer.remove(0);
+            Buffer.add(stored);
+        }
     }
 
-    public SessionCookie getCookie() { // returns the cookie of the current object
-        return this.cookie;
-    }
+    public String[] getNewest(int numMessages) {
+        String[] messages = new String[0];
+        int numAvailable = Buffer.size();
+        if (numAvailable == 0) {
+            return null;
+        }
 
-    public void setCookie(SessionCookie cookie) { // set the current objects' cookie to the given cookie
-        /*if (cookie == null) {         // if the cookie is null, the user is not allowed in the server
+        if (numMessages < 0) {
+            return null;
+        }
 
-        }*/
-        this.cookie = cookie;
+        if (numMessages == 0) {
+            return messages;
+        }
+
+        if (numAvailable < numMessages) {
+            messages = new String[numAvailable];
+            for (int i = 0; i < numAvailable; i++) {
+                messages[i] = Buffer.get(i);
+            }
+        }
+        messages = new String[numAvailable];
+        for (int i = 0; i < numAvailable; i++) {
+            messages[i] = Buffer.get(i);
+        }
+        return messages;
     }
 }
