@@ -1,0 +1,34 @@
+import java.util.Random;
+
+/**
+ * Created by gong62 on 10/30/15.
+ */
+public class SessionCookie {
+    private static long cookieID = 0;
+    private static long starttime = 0;
+    private static long curenttime = 0;
+    public static int timeoutLength = 300000;
+    public SessionCookie(long id) {  //initialize the cookieID with a random number between 0000 to 9999
+        starttime = id; // initialize the beginning time as 300 seconds;
+        Random r = new Random();
+        do {                    // compare the generated number with the existing number
+            this.cookieID = r.nextInt(9999);
+        } while (!equal(id));
+
+    }
+
+    public boolean equal(long cookieID) { // compare cookieIDs in different objects
+        return this.cookieID == cookieID;
+    }
+
+    public boolean hasTimedOut() {
+        return System.currentTimeMillis() - starttime <= timeoutLength;
+    }
+    public void updateTimeOfActivity() {
+        starttime = System.currentTimeMillis();
+    }
+    public long getID() {
+        return cookieID;
+    }
+
+}
