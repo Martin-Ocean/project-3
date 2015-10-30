@@ -1,6 +1,36 @@
-
+/**
+ * Created by gong62 on 10/30/15.
+ */
 public class User {
-	
-	// TODO complete this class
+    private String usernmae;
+    private String password;
+    SessionCookie cookie;
 
+    public User(String username, String password, SessionCookie cookie) { // initialize instances to relatively
+        this.usernmae = username;
+        this.password = password;
+        this.cookie = cookie;
+    }
+
+    public String getName() { //returns the username of the user
+        return this.usernmae;
+    }
+
+    public boolean checkPassword(String password) { // return ture if the password given is equal to the password in
+        if (password == null) {                     // the object & chekc if the password is null to prevent
+            return false;                           // null-pointer exception
+        }
+        return this.password == password;
+    }
+
+    public SessionCookie getCookie() { // returns the cookie of the current object
+        return this.cookie;
+    }
+
+    public void setCookie(SessionCookie cookie) { // set the current objects' cookie to the given cookie
+        /*if (cookie == null) {         // if the cookie is null, the user is not allowed in the server
+
+        }*/
+        this.cookie = cookie;
+    }
 }
