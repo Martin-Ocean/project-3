@@ -6,7 +6,7 @@ public class User {
     private String password;
     SessionCookie cookie;
 
-    public User(String username, String password, SessionCookie cookie) { // initialize instances to relatively
+    public User(String username, String password, SessionCookie cookie) { // initialize instances relatively
         this.usernmae = username;
         this.password = password;
         this.cookie = cookie;
