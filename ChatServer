@@ -1,7 +1,3 @@
-/**
- * Created by gong62 on 10/30/15.
- */
-
 import java.util.*;
 
 /**
@@ -99,14 +95,59 @@ public class ChatServer {
      * @return the server response
      */
     public String parseRequest(String request) {
-        String result;
-        // first step, parsing the input as array of strings separated by "\t"
-        String[] input = request.split("\t");
-        if (input[input.length - 1] != "\n" || input.length == 0) result =
+        String result = null;
+        MessageFactory message = new MessageFactory();
+        int errorcode = 0;
+
+        String[] input = request.split("\t"); // first step, parsing the input as array of strings separated by "\t"
 
 
+        if (input[0].equalsIgnoreCase("ADD-USER")) { // check if the command is there return code 11
+            if (input[0].equals("ADD-USER")) { // check if the command is in the right format return code 10
+                addUser(input);
+            }
+            errorcode = 10;
+        }
 
 
-       return request;
+        if (input[0].equalsIgnoreCase("POST-MESSAGE")) { // check if the command is there return code 11
+            if (input[0].equals("POST-MESSAGE")) { // check if the command is in the right format return code 10
+                userLogin(input);
+            }
+            errorcode = 10;
+        }
+
+        if (input[0].equalsIgnoreCase("POST-MESSAGE")) { // check if the command is there return code 11
+            if (input[0].equals("POST-MESSAGE")) { // check if the command is in the right format return code 10
+                postMessage(input);
+            }
+            errorcode = 10;
+        }
+
+        if (input[0].equalsIgnoreCase("GET-MESSAGE")) { // check if the command is there return code 11
+            if (input[0].equals("GET-MESSAGE")) { // check if the command is in the right format return code 10
+                getMessage(input);
+            }
+            errorcode = 10;
+        }
+        errorcode = 11;
+
+        return result = String.format("FAILURE\t%d\t%s", errorcode, message.makeErrorMessage(errorcode));
+    }
+
+    public String addUser(String[] args) {
+
+    }
+
+    public String userLogin(String[] args) {
+
+    }
+
+    public String postMessage(String[] args) {
+
+    }
+
+    public String getMessage(String[] args) {
+
     }
 }
